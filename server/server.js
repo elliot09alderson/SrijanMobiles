@@ -5,7 +5,7 @@ const cors = require("cors");
 const authRouter = require("./routes/auth/auth-routes");
 const adminProductsRouter = require("./routes/admin/products-routes");
 const adminOrderRouter = require("./routes/admin/order-routes");
-const dotenv = require('dotenv').config()
+const dotenv = require("dotenv").config();
 const shopProductsRouter = require("./routes/shop/products-routes");
 const shopCartRouter = require("./routes/shop/cart-routes");
 const shopAddressRouter = require("./routes/shop/address-routes");
@@ -28,7 +28,12 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://srijan-mobiles-frontend.vercel.app",
+      "https://srijanmobiles.store",
+      "https://www.sijanmobiles.store",
+    ],
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
       "Content-Type",
@@ -43,6 +48,13 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.json({
+    message: "bhai working hai",
+    frontend: "https://srijan-mobiles-frontend.vercel.app/",
+  });
+});
 app.use("/api/auth", authRouter);
 app.use("/api/admin/products", adminProductsRouter);
 app.use("/api/admin/orders", adminOrderRouter);
